@@ -1,0 +1,276 @@
+<!-- Struggled to seperate audio for same class. (App wouldn't pass tests with renamed 'equals' class... Dunno why, but time to move on). Probably also needs audio play stopped with consecutive, multiple key strokes. Also, some warning with favicon re. audio, but moving on. 
+Simpler, no-warnings version: https://codepen.io/camalDan/pen/ZEaPqKb?editors=1001	-->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>jQuery calc</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+<script src="https://kit.fontawesome.com/e95c9971e8.js" crossorigin="anonymous"></script>
+
+		<style>
+			body {
+				font-size: 17px;
+				font-family: arial;
+				background: #f4f4f4;
+				line-height: 1.5 em;
+			}
+			header{
+				background: #333;
+				color: #fff;
+				padding: 20px;
+				text-align: center;
+				border-bottom: 4px #000 solid;
+				margin-bottom: 10px;
+			}
+			#resetters {
+				width: 327px;
+				margin: auto;
+				margin: auto auto 5px auto ;
+
+			}
+			#clear{
+				border: solid;
+				border-radius: 5px;
+				width:65%;
+				height: 50px;
+				margin: auto 5px auto auto;
+				font-weight: bold;
+				cursor: pointer;
+				background: #74ff17;
+			}
+			#restore{
+				border: solid;
+				border-radius: 5px;
+				width:30%;
+				height: 50px;
+				margin: auto auto auto 5px;
+				font-weight: bold;
+				cursor: pointer;
+				background: #fffacf;
+				color: #D3D3D3;
+			}
+			#display{
+				text-align: right;
+				border: solid;
+				border-radius: 5px;
+				width:300px;
+				text-overflow: ellipsis;
+				height: 50px;
+				line-height: 50px;
+				margin: auto auto 5px auto;
+				padding: 10px;
+				font-size: 50px;
+				cursor:not-allowed;
+				background-color: #FAEACB;
+			}
+			#displayEquation{
+				display: flex;
+				justify-content: right;
+  			align-items: center;
+				border: solid;
+				border-radius: 5px;
+				width:300px;
+				height: 25px;
+				margin: auto auto 1px auto;
+				padding: 10px;
+				font-size: 15px;
+				cursor:not-allowed;
+				background-color: #F7DBD7;
+			}
+			#container{
+				position: relative;
+				border: solid;
+				border-radius: 5px;
+
+
+				width:auto;
+				max-width: 400px;
+				height: auto;
+				margin: auto;
+				padding: 10px;
+				background-color: #9CC0E7;
+			}
+			button {
+				width:28%;
+				height: 60px;
+				margin: 5px;
+			}
+			#equals {
+				background: #ff8e8c;
+				width: 91.5%;
+			}
+			div{
+				text-align: center;
+			}
+			.num {
+				background-color: #24ffbd;
+				font-weight: bold;
+			}
+			.nonNum {
+				background-color: #e789ff;
+			}
+		</style>
+  </head>
+
+  <body>
+  	<header>
+		<h1>jQ calc</h1>
+  	</header>
+		<div id="resetters">
+			<button id="clear">CLEAR</button>
+			<button id="restore">Restore</button>
+		</div>
+		<div id="displayEquation" ></div>
+		<div id="display"></div>
+		<div id='container'>
+			<button class='num' id='one' value="1">1</button>
+			<button class='num' id='two' value="2">2</button>
+			<button class='num' id='three' value="3">3</button>
+			<button class='num' id='four' value="4">4</button>
+			<button class='num' id='five' value="5">5</button>
+			<button class='num' id='six' value="6">6</button>
+			<button class='num' id='seven' value="7">7</button>
+			<button class='num' id='eight' value="8">8</button>
+			<button class='num' id='nine' value="9">9</button>
+			<button class='num' id='zero' value="0">0</button>
+			<button class='num' id='decimal' value=".">dot</button>
+			<button class='nonNum' id='add'><i class="fas fa-plus"></i></button>
+			<button class='nonNum' id='subtract'><i class="fas fa-minus"></i></button>
+			<button class='nonNum' id='multiply'><i class="fas fa-times"></i></button>
+			<button class='nonNum' id='divide'><i class="fas fas fa-divide"></i></button>
+			<button class='nonNum' id='equals'><i class="fas fas fas fa-equals"></i></button>
+		</div>
+
+		<script>
+			// state: 
+			let inputNum='0';
+			let equation = [];
+			document.getElementById('display').innerHTML = inputNum;
+
+			$(document).ready(function(){
+
+				$('.num').click(function(e){
+					var sound = new Audio("https://actions.google.com/sounds/v1/cartoon/metal_twang.ogg");
+					sound.play();
+					setTimeout(() => {
+						sound.pause(); 
+						sound.currentTime = 0;
+					}, 1500);
+					let margVar = 15+Math.random()*15;
+					let HeightVar = 30+Math.random()*60;
+					let widthVar = 20+Math.random()*53;
+					$(this).animate({margin: margVar, height: HeightVar, width: widthVar})
+
+					if( (/\.$/.test(inputNum)) && (e.target.value === '.')) {
+						return inputNum }
+					inputNum=inputNum+(e.target.value)
+					if(/^00/.test(inputNum)){inputNum=inputNum.substring(1)}
+					if(/^0\d/.test(inputNum)){inputNum=inputNum.substring(1)}
+					if(/.*[.]+.+[.]+.*/.test(inputNum)){inputNum = inputNum.slice(0, -1)}
+					if(inputNum.length > 8){document.getElementById('display').innerHTML = Number(inputNum).toExponential(5)}
+					else{document.getElementById('display').innerHTML = inputNum}
+				})
+
+				$('.nonNum').click(function(){
+					var sound = new Audio("https://actions.google.com/sounds/v1/crowds/battle_cry_high_pitch.ogg");
+					sound.play();
+					setTimeout(() => {
+						sound.pause(); 
+						sound.currentTime = 0;
+					}, 2000);
+					$(this).effect("bounce");
+					if(inputNum !== ''){
+						equation.push(parseFloat(inputNum));
+						inputNum='';
+					}
+				})
+				// function to delete spurious func characters then...
+				const resetFunc = () => {
+					while(equation[equation.length-1] === '+' 
+					|| equation[equation.length-1] === '*' 
+					|| equation[equation.length-1] === '/' 
+					|| equation[equation.length-1] === '-' ) {
+						equation.splice((equation.length-1), 1);
+						}
+				}
+				// ...then use to set desired function character: 
+				$('#add').click(function(){
+					resetFunc()
+					equation.push('+')
+				})
+				$('#multiply').click(function(){
+					resetFunc()
+					equation.push('*')
+				})
+				$('#divide').click(function(){
+					resetFunc()
+					equation.push('/')
+				})
+				$('#subtract').click(function(){
+					equation.push('-')
+					// deal with multiple '-' 
+					// (causes some spam in array, cleaned up in (#equals))
+					if(equation[equation.length-1] === '-' 
+					&& equation[equation.length-2] === '-'){ 
+						equation.splice((equation.length-2), 2, '+') }
+				})
+				$('#clear').click(function(){
+					window.name='';
+					equation.length = 0;
+					inputNum='0';
+					document.getElementById('display').innerHTML = inputNum
+				})
+				$('button').click(function(){
+					$('#displayEquation').text(equation.join(''));
+				})
+				$('#equals').click(function(){
+					var sound = new Audio("https://actions.google.com/sounds/v1/cartoon/drum_roll.ogg");
+					sound.play();
+					setTimeout(() => {
+						sound.pause(); 
+						sound.currentTime = 0;
+					}, 4500);
+					$('#displayEquation').text(equation.join(''));
+					if(equation[0]==='/'||equation[0]==='*'||equation[0]==='+'){equation.shift()}
+					if((typeof equation[equation.length-1]) !== 'number'){
+						equation.pop()}
+					// minus shifted to number & then drop '+''s
+					while(equation.indexOf('-') !== -1){
+						const minusIndex = equation.indexOf('-')
+						equation.splice(minusIndex, 2, (equation[minusIndex+1]*-1))
+					}
+					while(equation.indexOf('+') !== -1) {
+						equation.splice(equation.indexOf('+'), 1)	}
+					// perform divide funcs (&rewrite array) & then multiply
+					while(equation.indexOf('/') !== -1){
+					const divisorIndex = equation.indexOf('/')
+						equation.splice(divisorIndex-1, 3, (equation[divisorIndex-1]/equation[divisorIndex+1]))
+					}
+					while(equation.indexOf('*') !== -1){
+					const multiplierIndex = equation.indexOf('*')
+						equation.splice(multiplierIndex-1, 3, (equation[multiplierIndex-1]*equation[multiplierIndex+1]))
+					}
+					// perform sum with remainer array
+ 					let result = equation.reduce( (a, b) => a + b, 0 );
+					if((result.toString().length) > 8){document.getElementById('display').innerHTML = result.toExponential(5)}else{document.getElementById('display').innerHTML = result}
+					// reset
+					inputNum=result.toString();
+					equation=[];
+					function hinge() {
+						$("#container").addClass("animated hinge");
+						$('#restore').css('background-color','#74ff17');
+						$('#restore').css('color','black');
+						$('#restore').click(function() {
+							$('#container').removeClass("animated hinge"); 
+						});
+					}
+					hinge()
+				})
+			});
+		</script>
+	</body>
+</html>
