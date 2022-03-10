@@ -15,29 +15,20 @@ Simpler, no-warnings version: https://codepen.io/camalDan/pen/ZEaPqKb?editors=10
 			body {
 				font-size: 17px;
 				font-family: arial;
-				background: #f4f4f4;
+				background: #325aa8;
 				line-height: 1.5 em;
 			}
-			header{
-				background: #333;
-				color: #fff;
-				padding: 20px;
-				text-align: center;
-				border-bottom: 4px #000 solid;
-				margin-bottom: 10px;
-			}
 			#resetters {
+				height: 10vh;
 				width: auto;
 				margin: auto;
 				margin: auto auto 5px auto ;
-
 			}
 			#clear{
 				border: solid;
 				border-radius: 5px;
 				width:65%;
-				height: 50px;
-				min-height: 100px;
+				height: 10vh;
 				margin: auto 5px auto auto;
 				font-weight: bold;
 				cursor: pointer;
@@ -47,8 +38,7 @@ Simpler, no-warnings version: https://codepen.io/camalDan/pen/ZEaPqKb?editors=10
 				border: solid;
 				border-radius: 5px;
 				width:30%;
-				height: 50px;
-				min-height: 100px;
+				height: 10vh;
 				margin: auto auto auto 5px;
 				font-weight: bold;
 				cursor: pointer;
@@ -62,8 +52,7 @@ Simpler, no-warnings version: https://codepen.io/camalDan/pen/ZEaPqKb?editors=10
 				border-radius: 5px;
 				width:auto;
 				text-overflow: ellipsis;
-				height: 30%;
-				min-height: 100px;
+				height: 10vh;
 				/*line-height: 50px;*/
 				margin: auto auto 5px auto;
 				padding: 10px;
@@ -78,8 +67,7 @@ Simpler, no-warnings version: https://codepen.io/camalDan/pen/ZEaPqKb?editors=10
 				border: solid;
 				border-radius: 5px;
 				width:auto;
-				height: auto;
-				min-height: 100px;
+				height: 5vh;
 				margin: auto auto 1px auto;
 				padding: 10px;
 				font-size: 15px;
@@ -91,8 +79,7 @@ Simpler, no-warnings version: https://codepen.io/camalDan/pen/ZEaPqKb?editors=10
 				border: solid;
 				border-radius: 5px;
 				width:auto;
-				height: auto;
-				min-height: 800px;
+				height: 65vh;
 				margin: auto;
 				padding: 10px;
 				background-color: #9CC0E7;
@@ -100,7 +87,7 @@ Simpler, no-warnings version: https://codepen.io/camalDan/pen/ZEaPqKb?editors=10
 			button {
 				font-size: 60px;
 				width:28%;
-				height: 10vh;
+				height: auto;
 				margin: 5px;
 			}
 			#equals {
@@ -114,7 +101,7 @@ Simpler, no-warnings version: https://codepen.io/camalDan/pen/ZEaPqKb?editors=10
 			.num {
 				background-color: #24ffbd;
 				font-weight: bold;
-				font-size: 60px;
+				font-size: 70px;
 			}
 			.nonNum {
 				background-color: #e789ff;
@@ -124,9 +111,6 @@ Simpler, no-warnings version: https://codepen.io/camalDan/pen/ZEaPqKb?editors=10
   </head>
 
   <body>
-  	<header>
-		<h1>jQ calc</h1>
-  	</header>
 		<div id="resetters">
 			<button id="clear">CLEAR</button>
 			<button id="restore">Restore</button>
@@ -168,10 +152,9 @@ Simpler, no-warnings version: https://codepen.io/camalDan/pen/ZEaPqKb?editors=10
 						sound.currentTime = 0;
 					}, 1500);
 					let margVar = 15+Math.random()*15;
-					let HeightVar = 100+Math.random()*200;
-					let widthVar = 70+Math.random()*200;
-					$(this).animate({margin: margVar, height: HeightVar, width: widthVar})
-
+				//	let HeightVar = 100+Math.random()*200;
+					let widthVar = 100+Math.random()*200;
+					$(this).animate({margin: margVar,  width: widthVar})//height: HeightVar,
 					if( (/\.$/.test(inputNum)) && (e.target.value === '.')) {
 						return inputNum }
 					inputNum=inputNum+(e.target.value)
