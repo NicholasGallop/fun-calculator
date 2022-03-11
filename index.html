@@ -5,17 +5,16 @@ Simpler, no-warnings version: https://codepen.io/camalDan/pen/ZEaPqKb?editors=10
 <html lang="en">
   <head>
     <title>jQuery calc</title>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
-<script src="https://kit.fontawesome.com/e95c9971e8.js" crossorigin="anonymous"></script>
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <script src="https://kit.fontawesome.com/e95c9971e8.js" crossorigin="anonymous"></script>
 		<style>
 			body {
 				font-size: 17px;
 				font-family: arial;
-				background: #325aa8;
+				background: #8359a6;
 				line-height: 1.5 em;
 			}
 			#resetters {
@@ -92,7 +91,8 @@ Simpler, no-warnings version: https://codepen.io/camalDan/pen/ZEaPqKb?editors=10
 			}
 			#equals {
 				background: #ff8e8c;
-				width: 91.5%;
+				width: 90%;
+        font-size: 100px;
 			}
 			div{
 				text-align: center;
@@ -106,16 +106,13 @@ Simpler, no-warnings version: https://codepen.io/camalDan/pen/ZEaPqKb?editors=10
 			.nonNum {
 				background-color: #e789ff;
 				font-size: 50px;
-			}
-			.eekwals {
-				background-color: #e789ff;
-				font-size: 50px;
+        padding: 20px;
 			}
 		</style>
   </head>
 
   <body>
-		<div id="resetters">
+    <div id="resetters">
 			<button id="clear">CLEAR</button>
 			<button id="restore"><i class="fas fa-redo"></i></button>
 		</div>
@@ -132,51 +129,58 @@ Simpler, no-warnings version: https://codepen.io/camalDan/pen/ZEaPqKb?editors=10
 			<button class='num' id='eight' value="8">8</button>
 			<button class='num' id='nine' value="9">9</button>
 			<button class='num' id='zero' value="0">0</button>
-			<button class='num' id='decimal' value="." style='font-size: 100px, align-text: center'>.</button>
+			<button class='num' id='decimal' value=".">.</button>
 			<button class='nonNum' id='add'><i class="fas fa-plus"></i></button>
 			<button class='nonNum' id='subtract'><i class="fas fa-minus"></i></button>
 			<button class='nonNum' id='multiply'><i class="fas fa-times"></i></button>
 			<button class='nonNum' id='divide'><i class="fas fas fa-divide"></i></button>
-			<button class='eekwals' id='equals'>eekwohs</button>
+			<button class='equals' id='equals'>=</button>
 		</div>
 
+
 		<script>
+			document.getElementById('display').innerHTML = 0;
 			// state: 
-			let inputNum='0';
+			let inputNum = '';
 			let equation = [];
-			document.getElementById('display').innerHTML = inputNum;
-
+      let discardResult = false; 
 			$(document).ready(function(){
-
 				$('.num').click(function(e){
-					var sound = new Audio("https://actions.google.com/sounds/v1/cartoon/metal_twang.ogg");
-					sound.play();
-					setTimeout(() => {
-						sound.pause(); 
-						sound.currentTime = 0;
-					}, 1500);
-					let margVar = 15+Math.random()*15;
-				//	let HeightVar = 100+Math.random()*200;
-					let widthVar = 100+Math.random()*200;
-					$(this).animate({margin: margVar,  width: widthVar})//height: HeightVar,
+          // fun bit---------- .num
+          var sound = new Audio("https://actions.google.com/sounds/v1/cartoon/metal_twang.ogg");
+          sound.play();
+          setTimeout(() => {
+            sound.pause(); 
+            sound.currentTime = 0;
+          }, 1500);
+          let margVar = 15+Math.random()*15;
+          //	let HeightVar = 20+Math.random()*50;
+          let widthVar = 50+Math.random()*100;
+          $(this).animate({margin: margVar,  width: widthVar})//height: HeightVar,
+          //----------------
+          if(discardResult === true){equation = [];}
+          discardResult = false;
 					if( (/\.$/.test(inputNum)) && (e.target.value === '.')) {
 						return inputNum }
 					inputNum=inputNum+(e.target.value)
 					if(/^00/.test(inputNum)){inputNum=inputNum.substring(1)}
 					if(/^0\d/.test(inputNum)){inputNum=inputNum.substring(1)}
 					if(/.*[.]+.+[.]+.*/.test(inputNum)){inputNum = inputNum.slice(0, -1)}
-					if(inputNum.length > 8){document.getElementById('display').innerHTML = Number(inputNum).toExponential(5)}
-					else{document.getElementById('display').innerHTML = inputNum}
+					document.getElementById('display').innerHTML = inputNum
 				})
-
-				$('.nonNum').click(function(){
-					var sound = new Audio("https://actions.google.com/sounds/v1/crowds/battle_cry_high_pitch.ogg");
-					sound.play();
-					setTimeout(() => {
-						sound.pause(); 
-						sound.currentTime = 0;
-					}, 2000);
-					$(this).effect("bounce");
+        $('.nonNum').click(function(){
+          // fun bit--------- .nonNum
+          var sound = new Audio("https://actions.google.com/sounds/v1/crowds/battle_cry_high_pitch.ogg");
+          sound.play();
+          setTimeout(() => {
+            sound.pause(); 
+            sound.currentTime = 0;
+          }, 2000);
+          $(this).effect("bounce");
+          //----------------
+        })
+				$('.nonNum, .equals').click(function(){
+          discardResult = false;
 					if(inputNum !== ''){
 						equation.push(parseFloat(inputNum));
 						inputNum='';
@@ -213,7 +217,6 @@ Simpler, no-warnings version: https://codepen.io/camalDan/pen/ZEaPqKb?editors=10
 						equation.splice((equation.length-2), 2, '+') }
 				})
 				$('#clear').click(function(){
-					window.name='';
 					equation.length = 0;
 					inputNum='0';
 					document.getElementById('display').innerHTML = inputNum
@@ -222,20 +225,20 @@ Simpler, no-warnings version: https://codepen.io/camalDan/pen/ZEaPqKb?editors=10
 					$('#displayEquation').text(equation.join(''));
 				})
 				$('#equals').click(function(){
-					var sound = new Audio("https://actions.google.com/sounds/v1/cartoon/drum_roll.ogg");
-					sound.play();
-					setTimeout(() => {
-						sound.pause(); 
-						sound.currentTime = 0;
-					}, 4500);
+          // fun bit---------- .equals 1
+          var sound = new Audio("https://actions.google.com/sounds/v1/cartoon/drum_roll.ogg");
+          sound.play();
+          setTimeout(() => {
+            sound.pause(); 
+            sound.currentTime = 0;
+          }, 4500);
+          //------------------
 					$('#displayEquation').text(equation.join(''));
 					if(equation[0]==='/'||equation[0]==='*'||equation[0]==='+'){equation.shift()}
-					if((typeof equation[equation.length-1]) !== 'number'){
-						equation.pop()}
 					// minus shifted to number & then drop '+''s
 					while(equation.indexOf('-') !== -1){
 						const minusIndex = equation.indexOf('-')
-						equation.splice(minusIndex, 2, (equation[minusIndex+1]*-1))
+							equation.splice(minusIndex, 2, (equation[minusIndex+1]*-1))
 					}
 					while(equation.indexOf('+') !== -1) {
 						equation.splice(equation.indexOf('+'), 1)	}
@@ -249,22 +252,28 @@ Simpler, no-warnings version: https://codepen.io/camalDan/pen/ZEaPqKb?editors=10
 						equation.splice(multiplierIndex-1, 3, (equation[multiplierIndex-1]*equation[multiplierIndex+1]))
 					}
 					// perform sum with remainer array
- 					let result = equation.reduce( (a, b) => a + b, 0 );
-					if((result.toString().length) > 8){document.getElementById('display').innerHTML = result.toExponential(5)}else{document.getElementById('display').innerHTML = result}
+ 					const result = equation.reduce( (a, b) => a + b, 0 );
+					document.getElementById('display').innerHTML = result
 					// reset
-					inputNum=result.toString();
-					equation=[];
-					function hinge() {
-						$("#container").addClass("animated hinge");
-						$('#restore').css('background-color','#74ff17');
-						$('#restore').css('color','black');
-						$('#restore').click(function() {
-							$('#container').removeClass("animated hinge"); 
-						});
-					}
-					hinge()
+					inputNum='';
+					equation=[result];
+          discardResult = true;
+          // fun bit------------- .equals 2
+          function hinge() {
+            $("#container").addClass("animated hinge");
+            $('#restore').css('background-color','#74ff17');
+            $('#restore').css('color','black');
+            $('#restore').click(function() {
+              $('#restore').css('background-color','#fffacf');
+						  $('#restore').css('color','#D3D3D3');
+              $('#container').removeClass("animated hinge"); 
+            });
+          }
+          hinge()
+          //-------------------
 				})
 			});
 		</script>
+		 <script src="https://cdn.freecodecamp.org/testable-projects-fcc/v1/bundle.js"></script>
 	</body>
 </html>
