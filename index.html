@@ -143,20 +143,18 @@
       let discardResult = false; 
 			$(document).ready(function(){
 				$('.num').click(function(e){
-          // fun bit---------- .num
-          var sound = new Audio("https://actions.google.com/sounds/v1/cartoon/metal_twang.ogg");
-          sound.play();
-          setTimeout(() => {
-            sound.pause(); 
-            sound.currentTime = 0;
-          }, 1500);
-          let margVar = 15+Math.random()*15;
-          //	let HeightVar = 20+Math.random()*50;
-          let widthVar = 50+Math.random()*100;
-          $(this).animate({margin: margVar,  width: widthVar})//height: HeightVar,
-          //----------------
-          if(discardResult === true){equation = [];}
-          discardResult = false;
+					  // fun bit---------- .num
+					  var sound = new Audio("https://actions.google.com/sounds/v1/cartoon/metal_twang.ogg");
+					  sound.play();
+					  setTimeout(() => {
+					    sound.pause(); 
+					    sound.currentTime = 0;
+					  }, 1500);
+					  let widthVar = 50+Math.random()*150;
+					  $(this).animate({width: widthVar})
+					  //----------------
+					  if(discardResult === true){equation = [];}
+					  discardResult = false;
 					if( (/\.$/.test(inputNum)) && (e.target.value === '.')) {
 						return inputNum }
 					inputNum=inputNum+(e.target.value)
@@ -165,19 +163,19 @@
 					if(/.*[.]+.+[.]+.*/.test(inputNum)){inputNum = inputNum.slice(0, -1)}
 					document.getElementById('display').innerHTML = inputNum
 				})
-        $('.nonNum').click(function(){
-          // fun bit--------- .nonNum
-          var sound = new Audio("https://actions.google.com/sounds/v1/crowds/battle_cry_high_pitch.ogg");
-          sound.play();
-          setTimeout(() => {
-            sound.pause(); 
-            sound.currentTime = 0;
-          }, 2000);
-          $(this).effect("bounce");
-          //----------------
-        })
+					$('.nonNum').click(function(){
+					  // fun bit--------- .nonNum
+					  var sound = new Audio("https://actions.google.com/sounds/v1/crowds/battle_cry_high_pitch.ogg");
+					  sound.play();
+					  setTimeout(() => {
+					    sound.pause(); 
+					    sound.currentTime = 0;
+					  }, 2000);
+					  $(this).effect("bounce");
+					  //----------------
+					})
 				$('.nonNum, .equals').click(function(){
-          discardResult = false;
+         				 discardResult = false;
 					if(inputNum !== ''){
 						equation.push(parseFloat(inputNum));
 						inputNum='';
@@ -222,14 +220,14 @@
 					$('#displayEquation').text(equation.join(''));
 				})
 				$('#equals').click(function(){
-          // fun bit---------- .equals 1
-          var sound = new Audio("https://actions.google.com/sounds/v1/cartoon/drum_roll.ogg");
-          sound.play();
-          setTimeout(() => {
-            sound.pause(); 
-            sound.currentTime = 0;
-          }, 4500);
-          //------------------
+					  // fun bit---------- .equals 1
+					  var sound = new Audio("https://actions.google.com/sounds/v1/cartoon/drum_roll.ogg");
+					  sound.play();
+					  setTimeout(() => {
+					    sound.pause(); 
+					    sound.currentTime = 0;
+					  }, 4500);
+					  //------------------
 					$('#displayEquation').text(equation.join(''));
 					if(equation[0]==='/'||equation[0]==='*'||equation[0]==='+'){equation.shift()}
 					// minus shifted to number & then drop '+''s
@@ -254,20 +252,20 @@
 					// reset
 					inputNum='';
 					equation=[result];
-          discardResult = true;
-          // fun bit------------- .equals 2
-          function hinge() {
-            $("#container").addClass("animated hinge");
-            $('#restore').css('background-color','#74ff17');
-            $('#restore').css('color','black');
-            $('#restore').click(function() {
-              $('#restore').css('background-color','#fffacf');
-						  $('#restore').css('color','#D3D3D3');
-              $('#container').removeClass("animated hinge"); 
-            });
-          }
-          hinge()
-          //-------------------
+					  discardResult = true;
+					  // fun bit------------- .equals 2
+					  function hinge() {
+					    $("#container").addClass("animated hinge");
+					    $('#restore').css('background-color','#74ff17');
+					    $('#restore').css('color','black');
+					    $('#restore').click(function() {
+					      $('#restore').css('background-color','#fffacf');
+										  $('#restore').css('color','#D3D3D3');
+					      $('#container').removeClass("animated hinge"); 
+					    });
+					  }
+					  hinge()
+					  //-------------------
 				})
 			});
 		</script>
